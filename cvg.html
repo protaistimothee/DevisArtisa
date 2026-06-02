@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conditions Générales de Vente — DevisArtisa</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #3a7d44;
+      --green-light: #f0faf2;
+      --green-mid: #d1ead5;
+      --ink: #1a1f1b;
+      --muted: #5a6b5e;
+      --border: #dce8de;
+      --bg: #f8fbf8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* Header */
+    header {
+      background: var(--green);
+      padding: 48px 24px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.03) 40px,
+        rgba(255,255,255,0.03) 80px
+      );
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .logo span {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border-radius: 6px;
+      padding: 2px 10px;
+      font-style: italic;
+    }
+
+    header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(22px, 4vw, 36px);
+      color: #fff;
+      font-weight: 400;
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .version {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.85);
+      font-size: 13px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      position: relative;
+    }
+
+    /* Layout */
+    .wrapper {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* TOC */
+    .toc {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 32px;
+      margin: 40px 0;
+      box-shadow: 0 2px 12px rgba(58,125,68,0.06);
+    }
+
+    .toc h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 16px;
+      color: var(--green);
+      margin-bottom: 16px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-style: italic;
+    }
+
+    .toc ol {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 24px;
+    }
+
+    @media (max-width: 500px) {
+      .toc ol { grid-template-columns: 1fr; }
+    }
+
+    .toc ol li a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toc ol li a::before {
+      content: attr(data-num);
+      font-family: 'DM Serif Display', serif;
+      font-size: 11px;
+      color: var(--green);
+      font-style: italic;
+      min-width: 18px;
+    }
+
+    .toc ol li a:hover { color: var(--green); }
+
+    /* Articles */
+    article {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px 36px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(58,125,68,0.04);
+      animation: fadeUp 0.4s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    article:nth-child(2) { animation-delay: 0.05s; }
+    article:nth-child(3) { animation-delay: 0.10s; }
+    article:nth-child(4) { animation-delay: 0.15s; }
+    article:nth-child(5) { animation-delay: 0.20s; }
+    article:nth-child(6) { animation-delay: 0.25s; }
+
+    .article-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .article-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      color: var(--green);
+      font-style: italic;
+      white-space: nowrap;
+      padding: 3px 10px;
+      background: var(--green-light);
+      border-radius: 20px;
+    }
+
+    article h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    article h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin: 20px 0 8px;
+    }
+
+    article p {
+      color: #3a4a3e;
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+
+    article p:last-child { margin-bottom: 0; }
+
+    article ul {
+      list-style: none;
+      margin: 8px 0 12px;
+    }
+
+    article ul li {
+      position: relative;
+      padding-left: 20px;
+      font-size: 15px;
+      color: #3a4a3e;
+      margin-bottom: 6px;
+    }
+
+    article ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .info-block {
+      background: var(--green-light);
+      border-left: 3px solid var(--green);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .info-block strong { color: var(--ink); }
+
+    a { color: var(--green); text-decoration: underline; }
+    a:hover { opacity: 0.75; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 16px;
+    }
+
+    footer strong { color: var(--ink); }
+
+    @media (max-width: 600px) {
+      article { padding: 24px 20px; }
+      .toc { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span>DevisArtisa</span></div>
+  <h1>Conditions Générales de Vente</h1>
+  <span class="version">Version du 2 juin 2025</span>
+</header>
+
+<div class="wrapper">
+
+  <nav class="toc">
+    <h2>Sommaire</h2>
+    <ol>
+      <li><a href="#art1" data-num="01">Identification du prestataire</a></li>
+      <li><a href="#art2" data-num="02">Champ d'application</a></li>
+      <li><a href="#art3" data-num="03">Description du service</a></li>
+      <li><a href="#art4" data-num="04">Inscription et compte</a></li>
+      <li><a href="#art5" data-num="05">Prix et abonnement</a></li>
+      <li><a href="#art6" data-num="06">Essai gratuit</a></li>
+      <li><a href="#art7" data-num="07">Disponibilité du service</a></li>
+      <li><a href="#art8" data-num="08">Propriété intellectuelle</a></li>
+      <li><a href="#art9" data-num="09">Protection des données</a></li>
+      <li><a href="#art10" data-num="10">Responsabilité</a></li>
+      <li><a href="#art11" data-num="11">Résiliation</a></li>
+      <li><a href="#art12" data-num="12">Modifications des CGV</a></li>
+      <li><a href="#art13" data-num="13">Droit applicable</a></li>
+      <li><a href="#art14" data-num="14">Divers</a></li>
+    </ol>
+  </nav>
+
+  <article id="art1">
+    <div class="article-header">
+      <span class="article-num">Art. 01</span>
+      <h2>Identification du prestataire</h2>
+    </div>
+    <div class="info-block">
+      <strong>Timothée Protais</strong><br>
+      Neuchâtel, Suisse<br>
+      Contact : <a href="mailto:protaistimothee@gmail.com">protaistimothee@gmail.com</a>
+    </div>
+    <p>Le Prestataire agit en qualité de personne physique indépendante. DevisArtisa est une application SaaS destinée exclusivement aux artisans professionnels établis en Suisse.</p>
+  </article>
+
+  <article id="art2">
+    <div class="article-header">
+      <span class="article-num">Art. 02</span>
+      <h2>Champ d'application</h2>
+    </div>
+    <p>Les présentes Conditions Générales de Vente (CGV) régissent l'ensemble des relations contractuelles entre le Prestataire et tout professionnel (artisan) qui s'abonne à DevisArtisa (ci-après « le Client »).</p>
+    <p>Les présentes CGV s'appliquent exclusivement à des relations entre professionnels (B2B) au sens du droit suisse. Elles sont soumises au Code des obligations suisse (CO).</p>
+    <p>Toute utilisation de l'application vaut acceptation sans réserve des présentes CGV.</p>
+  </article>
+
+  <article id="art3">
+    <div class="article-header">
+      <span class="article-num">Art. 03</span>
+      <h2>Description du service</h2>
+    </div>
+    <p>DevisArtisa est une application mobile en mode SaaS (Software as a Service) permettant aux artisans de :</p>
+    <ul>
+      <li>Créer et gérer des devis professionnels</li>
+      <li>Gérer un catalogue de prestations et de matériaux</li>
+      <li>Envoyer des devis à leurs clients par voie électronique</li>
+      <li>Suivre l'état des devis (envoyé, accepté, refusé)</li>
+    </ul>
+    <p>L'accès au service est conditionné à la souscription d'un abonnement mensuel payant selon les modalités définies à l'article 5.</p>
+  </article>
+
+  <article id="art4">
+    <div class="article-header">
+      <span class="article-num">Art. 04</span>
+      <h2>Inscription et compte utilisateur</h2>
+    </div>
+    <p>Pour accéder à DevisArtisa, le Client doit créer un compte en fournissant des informations exactes et complètes. Le Client est seul responsable de la confidentialité de ses identifiants de connexion.</p>
+    <p>Le Prestataire se réserve le droit de suspendre ou supprimer tout compte en cas d'utilisation frauduleuse, abusive ou contraire aux présentes CGV, sans préavis ni indemnité.</p>
+  </article>
+
+  <article id="art5">
+    <div class="article-header">
+      <span class="article-num">Art. 05</span>
+      <h2>Prix et abonnement</h2>
+    </div>
+    <h3>5.1 Tarifs</h3>
+    <p>Les prix des abonnements sont indiqués en francs suisses (CHF) hors taxes applicables, sur la page de tarification de l'application. DevisArtisa propose trois formules d'abonnement mensuel. Le Prestataire se réserve le droit de modifier ses tarifs avec un préavis de 30 jours. Les abonnements en cours restent au tarif souscrit jusqu'à leur échéance mensuelle.</p>
+
+    <h3>5.2 Abonnement mensuel</h3>
+    <p>L'abonnement mensuel est renouvelé automatiquement chaque mois à la date anniversaire de la souscription. Le Client peut résilier à tout moment depuis son espace personnel, avec effet à la fin de la période mensuelle en cours.</p>
+
+    <h3>5.3 Paiement</h3>
+    <p>Le paiement est effectué en ligne par carte bancaire via la plateforme Stripe (Stripe, Inc.). Les données de paiement sont traitées directement par Stripe et ne sont pas stockées par le Prestataire.</p>
+    <p>En cas d'échec de paiement, l'accès au service peut être suspendu jusqu'à régularisation de la situation.</p>
+  </article>
+
+  <article id="art6">
+    <div class="article-header">
+      <span class="article-num">Art. 06</span>
+      <h2>Essai gratuit</h2>
+    </div>
+    <p>Une période d'essai gratuite peut être proposée lors de l'inscription. À l'issue de cette période, l'abonnement payant est activé automatiquement sauf résiliation avant la fin de l'essai. Le Client en est informé clairement avant la fin de la période d'essai.</p>
+  </article>
+
+  <article id="art7">
+    <div class="article-header">
+      <span class="article-num">Art. 07</span>
+      <h2>Disponibilité du service</h2>
+    </div>
+    <p>Le Prestataire s'efforce d'assurer la disponibilité du service 24h/24 et 7j/7. Toutefois, des interruptions peuvent survenir pour des opérations de maintenance, des mises à jour ou des raisons techniques indépendantes de sa volonté.</p>
+    <p>Le Prestataire ne saurait être tenu responsable des interruptions de service dues à des défaillances d'infrastructures tierces (hébergement, réseau, Supabase, Stripe, etc.).</p>
+    <p>Aucune garantie de disponibilité (SLA) n'est accordée dans le cadre de l'offre standard.</p>
+  </article>
+
+  <article id="art8">
+    <div class="article-header">
+      <span class="article-num">Art. 08</span>
+      <h2>Propriété intellectuelle</h2>
+    </div>
+    <p>L'application DevisArtisa, son code source, ses interfaces, ses marques et son contenu sont la propriété exclusive du Prestataire. Toute reproduction, modification ou distribution non autorisée est interdite.</p>
+    <p>Le Client conserve l'intégralité des droits sur les données qu'il saisit dans l'application (devis, contacts, catalogues, etc.).</p>
+  </article>
+
+  <article id="art9">
+    <div class="article-header">
+      <span class="article-num">Art. 09</span>
+      <h2>Protection des données personnelles</h2>
+    </div>
+    <p>Le traitement des données personnelles est décrit dans la Politique de confidentialité accessible sur demande à <a href="mailto:protaistimothee@gmail.com">protaistimothee@gmail.com</a>. Le Prestataire traite les données conformément à la Loi fédérale suisse sur la protection des données (nLPD, en vigueur depuis le 1er septembre 2023) et, le cas échéant, au Règlement général sur la protection des données de l'Union européenne (RGPD).</p>
+  </article>
+
+  <article id="art10">
+    <div class="article-header">
+      <span class="article-num">Art. 10</span>
+      <h2>Responsabilité</h2>
+    </div>
+    <p>Le Prestataire ne saurait être tenu responsable des dommages indirects, pertes de données, manque à gagner ou préjudices commerciaux résultant de l'utilisation ou de l'impossibilité d'utiliser le service.</p>
+    <p>En tout état de cause, la responsabilité du Prestataire est limitée au montant des sommes effectivement encaissées au cours des 12 derniers mois précédant le sinistre.</p>
+  </article>
+
+  <article id="art11">
+    <div class="article-header">
+      <span class="article-num">Art. 11</span>
+      <h2>Résiliation</h2>
+    </div>
+    <p>Le Client peut résilier son abonnement à tout moment depuis son espace personnel. La résiliation prend effet à la fin de la période mensuelle en cours.</p>
+    <p>Le Prestataire se réserve le droit de résilier un compte sans préavis en cas de violation grave des présentes CGV, d'utilisation frauduleuse ou de non-paiement.</p>
+    <p>Après résiliation, les données du Client sont conservées pendant 30 jours puis supprimées définitivement, sauf obligations légales contraires.</p>
+  </article>
+
+  <article id="art12">
+    <div class="article-header">
+      <span class="article-num">Art. 12</span>
+      <h2>Modifications des CGV</h2>
+    </div>
+    <p>Le Prestataire se réserve le droit de modifier les présentes CGV à tout moment. Les Clients sont informés de toute modification significative par email avec un préavis de 30 jours. La poursuite de l'utilisation du service après ce délai vaut acceptation des nouvelles CGV.</p>
+  </article>
+
+  <article id="art13">
+    <div class="article-header">
+      <span class="article-num">Art. 13</span>
+      <h2>Droit applicable et for judiciaire</h2>
+    </div>
+    <p>Les présentes CGV sont soumises au droit suisse, en particulier au Code des obligations (CO).</p>
+    <p>Tout litige relatif à l'interprétation, la validité ou l'exécution des présentes CGV sera soumis à la juridiction compétente du canton de Neuchâtel, Suisse.</p>
+  </article>
+
+  <article id="art14">
+    <div class="article-header">
+      <span class="article-num">Art. 14</span>
+      <h2>Divers</h2>
+    </div>
+    <p>Si l'une des clauses des présentes CGV est déclarée nulle ou inapplicable, les autres clauses demeurent en vigueur. Le fait pour le Prestataire de ne pas se prévaloir d'une disposition ne constitue pas une renonciation à celle-ci.</p>
+  </article>
+
+</div>
+
+<footer>
+  <strong>DevisArtisa</strong> · Timothée Protais · Neuchâtel, Suisse<br>
+  <a href="mailto:protaistimothee@gmail.com">protaistimothee@gmail.com</a> · Version du 2 juin 2025
+</footer>
+
+</body>
+</html>
