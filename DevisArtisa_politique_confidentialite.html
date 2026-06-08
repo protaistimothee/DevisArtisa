@@ -4,20 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Politique de confidentialité — DevisArtisa</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --ink: #1a1a18;
-      --muted: #6b6b65;
-      --rule: #d8d5ce;
-      --accent: #2d5a3d;
-      --accent-light: #e8f0ea;
-      --bg: #faf9f6;
-      --card: #ffffff;
+      --green: #3a7d44;
+      --green-light: #f0faf2;
+      --green-mid: #d1ead5;
+      --ink: #1a1f1b;
+      --muted: #5a6b5e;
+      --border: #dce8de;
+      --bg: #f8fbf8;
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'DM Sans', sans-serif;
@@ -29,239 +28,349 @@
 
     /* Header */
     header {
-      background: var(--accent);
-      color: white;
-      padding: 3rem 2rem 2.5rem;
+      background: var(--green);
+      padding: 48px 24px 40px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    header .label {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      opacity: 0.7;
-      margin-bottom: 0.75rem;
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.03) 40px,
+        rgba(255,255,255,0.03) 80px
+      );
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .logo span {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border-radius: 6px;
+      padding: 2px 10px;
+      font-style: italic;
     }
 
     header h1 {
-      font-family: 'Fraunces', serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 600;
-      line-height: 1.15;
-      margin-bottom: 0.5rem;
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(22px, 4vw, 36px);
+      color: #fff;
+      font-weight: 400;
+      position: relative;
+      margin-bottom: 12px;
     }
 
-    header .meta {
-      font-size: 0.875rem;
-      opacity: 0.65;
-      margin-top: 1rem;
+    .version {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.85);
+      font-size: 13px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      position: relative;
     }
 
     /* Layout */
-    .container {
-      max-width: 760px;
+    .wrapper {
+      max-width: 780px;
       margin: 0 auto;
-      padding: 3rem 1.5rem 5rem;
+      padding: 0 24px 80px;
     }
 
-    /* Table des matières */
+    /* TOC */
     .toc {
-      background: var(--accent-light);
-      border-left: 3px solid var(--accent);
-      border-radius: 0 8px 8px 0;
-      padding: 1.5rem 1.75rem;
-      margin-bottom: 3rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 32px;
+      margin: 40px 0;
+      box-shadow: 0 2px 12px rgba(58,125,68,0.06);
     }
 
     .toc h2 {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
+      font-family: 'DM Serif Display', serif;
+      font-size: 16px;
+      color: var(--green);
+      margin-bottom: 16px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 0.75rem;
+      font-style: italic;
     }
 
     .toc ol {
-      padding-left: 1.25rem;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .toc ol li { margin-bottom: 0.3rem; }
-    .toc a { color: var(--accent); text-decoration: none; }
-    .toc a:hover { text-decoration: underline; }
-
-    /* Sections */
-    section {
-      margin-bottom: 3rem;
-      padding-bottom: 3rem;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    section:last-of-type { border-bottom: none; }
-
-    .section-number {
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 0.4rem;
-    }
-
-    h2 {
-      font-family: 'Fraunces', serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1.25rem;
-      line-height: 1.25;
-    }
-
-    h3 {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--accent);
-      margin: 1.5rem 0 0.5rem;
-    }
-
-    p { margin-bottom: 1rem; color: #2c2c2a; }
-    p:last-child { margin-bottom: 0; }
-
-    ul {
       list-style: none;
-      padding: 0;
-      margin: 0.75rem 0 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 24px;
     }
 
-    ul li {
-      padding: 0.35rem 0 0.35rem 1.5rem;
+    @media (max-width: 500px) {
+      .toc ol { grid-template-columns: 1fr; }
+    }
+
+    .toc ol li a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toc ol li a::before {
+      content: attr(data-num);
+      font-family: 'DM Serif Display', serif;
+      font-size: 11px;
+      color: var(--green);
+      font-style: italic;
+      min-width: 18px;
+    }
+
+    .toc ol li a:hover { color: var(--green); }
+
+    /* Articles */
+    article {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px 36px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(58,125,68,0.04);
+      animation: fadeUp 0.4s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    article:nth-child(2)  { animation-delay: 0.05s; }
+    article:nth-child(3)  { animation-delay: 0.10s; }
+    article:nth-child(4)  { animation-delay: 0.15s; }
+    article:nth-child(5)  { animation-delay: 0.20s; }
+    article:nth-child(6)  { animation-delay: 0.25s; }
+    article:nth-child(7)  { animation-delay: 0.30s; }
+    article:nth-child(8)  { animation-delay: 0.35s; }
+    article:nth-child(9)  { animation-delay: 0.40s; }
+    article:nth-child(10) { animation-delay: 0.45s; }
+    article:nth-child(11) { animation-delay: 0.50s; }
+
+    .article-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .article-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      color: var(--green);
+      font-style: italic;
+      white-space: nowrap;
+      padding: 3px 10px;
+      background: var(--green-light);
+      border-radius: 20px;
+    }
+
+    article h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    article h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin: 20px 0 8px;
+    }
+
+    article p {
+      color: #3a4a3e;
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+
+    article p:last-child { margin-bottom: 0; }
+
+    article ul {
+      list-style: none;
+      margin: 8px 0 12px;
+    }
+
+    article ul li {
       position: relative;
-      color: #2c2c2a;
+      padding-left: 20px;
+      font-size: 15px;
+      color: #3a4a3e;
+      margin-bottom: 6px;
     }
 
-    ul li::before {
+    article ul li::before {
       content: '–';
       position: absolute;
       left: 0;
-      color: var(--accent);
+      color: var(--green);
       font-weight: 600;
     }
 
-    /* Card pour sous-traitants */
-    .card {
-      background: var(--card);
-      border: 1px solid var(--rule);
-      border-radius: 10px;
-      padding: 1.25rem 1.5rem;
-      margin: 1rem 0;
+    /* Info block (highlight neutre) */
+    .info-block {
+      background: var(--green-light);
+      border-left: 3px solid var(--green);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 14px;
+      color: var(--muted);
     }
 
-    .card-title {
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
-      font-size: 0.95rem;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.75rem;
-    }
+    .info-block strong { color: var(--ink); }
 
-    .card-title .badge {
-      background: var(--accent-light);
-      color: var(--accent);
-      font-size: 0.65rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      font-weight: 500;
-    }
-
-    .card p { font-size: 0.9rem; margin-bottom: 0.5rem; }
-    .card p:last-child { margin-bottom: 0; }
-    .card strong { color: var(--ink); }
-
-    /* Highlight box */
-    .highlight {
+    /* Warning block (jaune) */
+    .warn-block {
       background: #fff8e6;
       border-left: 3px solid #e0a020;
       border-radius: 0 8px 8px 0;
-      padding: 1rem 1.25rem;
-      font-size: 0.9rem;
-      margin: 1rem 0;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 14px;
       color: #5a4010;
     }
 
-    /* Contact */
-    .contact-link {
-      color: var(--accent);
-      font-weight: 500;
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s;
+    .warn-block strong { color: #3a2a00; }
+
+    /* Sous-traitant card */
+    .subcard {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin: 12px 0;
     }
-    .contact-link:hover { border-color: var(--accent); }
+
+    .subcard-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .subcard-title strong {
+      font-family: 'DM Serif Display', serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    .badge {
+      background: var(--green-light);
+      color: var(--green);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    .subcard p {
+      font-size: 14px !important;
+      margin-bottom: 6px !important;
+    }
+
+    a { color: var(--green); text-decoration: underline; }
+    a:hover { opacity: 0.75; }
 
     /* Footer */
     footer {
       text-align: center;
-      padding: 2rem 1.5rem;
-      font-size: 0.8rem;
+      padding: 32px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
       color: var(--muted);
-      border-top: 1px solid var(--rule);
+      margin-top: 16px;
     }
 
     footer strong { color: var(--ink); }
+
+    @media (max-width: 600px) {
+      article { padding: 24px 20px; }
+      .toc { padding: 20px; }
+    }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="label">DevisArtisa</div>
+  <div class="logo"><span>DevisArtisa</span></div>
   <h1>Politique de confidentialité</h1>
-  <div class="meta">Dernière mise à jour : 2 juin 2026</div>
+  <span class="version">Version du 2 juin 2026</span>
 </header>
 
-<div class="container">
+<div class="wrapper">
 
-  <nav class="toc" aria-label="Table des matières">
+  <nav class="toc">
     <h2>Sommaire</h2>
     <ol>
-      <li><a href="#responsable">Identité du responsable du traitement</a></li>
-      <li><a href="#donnees">Données personnelles collectées</a></li>
-      <li><a href="#finalites">Finalités du traitement</a></li>
-      <li><a href="#base-legale">Base légale du traitement</a></li>
-      <li><a href="#sous-traitants">Sous-traitants et transferts de données</a></li>
-      <li><a href="#conservation">Durée de conservation</a></li>
-      <li><a href="#cookies">Cookies et traceurs</a></li>
-      <li><a href="#droits">Vos droits</a></li>
-      <li><a href="#securite">Sécurité des données</a></li>
-      <li><a href="#modifications">Modifications de la présente politique</a></li>
-      <li><a href="#droit-applicable">Droit applicable</a></li>
+      <li><a href="#art1"  data-num="01">Identité du responsable</a></li>
+      <li><a href="#art2"  data-num="02">Données collectées</a></li>
+      <li><a href="#art3"  data-num="03">Finalités du traitement</a></li>
+      <li><a href="#art4"  data-num="04">Base légale</a></li>
+      <li><a href="#art5"  data-num="05">Sous-traitants &amp; transferts</a></li>
+      <li><a href="#art6"  data-num="06">Durée de conservation</a></li>
+      <li><a href="#art7"  data-num="07">Cookies et traceurs</a></li>
+      <li><a href="#art8"  data-num="08">Vos droits</a></li>
+      <li><a href="#art9"  data-num="09">Sécurité des données</a></li>
+      <li><a href="#art10" data-num="10">Modifications</a></li>
+      <li><a href="#art11" data-num="11">Droit applicable</a></li>
     </ol>
   </nav>
 
-  <!-- 1 -->
-  <section id="responsable">
-    <div class="section-number">Article 1</div>
-    <h2>Identité du responsable du traitement</h2>
+  <!-- Art. 1 -->
+  <article id="art1">
+    <div class="article-header">
+      <span class="article-num">Art. 01</span>
+      <h2>Identité du responsable du traitement</h2>
+    </div>
     <p>Le responsable du traitement des données personnelles collectées via DevisArtisa est :</p>
-    <ul>
-      <li><strong>Raison sociale :</strong> DevisArtisa</li>
-      <li><strong>Contact :</strong> <a class="contact-link" href="mailto:protaistimothee@gmail.com">protaistimothee@gmail.com</a></li>
-    </ul>
+    <div class="info-block">
+      <strong>DevisArtisa</strong><br>
+      Contact : <a href="mailto:protaistimothee@gmail.com">protaistimothee@gmail.com</a>
+    </div>
     <p>Pour toute question relative à la présente politique ou à l'exercice de vos droits, vous pouvez nous contacter à l'adresse e-mail ci-dessus.</p>
-  </section>
+  </article>
 
-  <!-- 2 -->
-  <section id="donnees">
-    <div class="section-number">Article 2</div>
-    <h2>Données personnelles collectées</h2>
+  <!-- Art. 2 -->
+  <article id="art2">
+    <div class="article-header">
+      <span class="article-num">Art. 02</span>
+      <h2>Données personnelles collectées</h2>
+    </div>
     <p>Dans le cadre de l'utilisation de DevisArtisa, nous collectons les données suivantes concernant nos clients (artisans) :</p>
     <ul>
       <li>Nom et prénom</li>
@@ -273,15 +382,17 @@
       <li>Métier / secteur d'activité</li>
       <li>Identifiant Stripe (Stripe Customer ID) — référence technique permettant de relier votre compte à notre prestataire de paiement</li>
     </ul>
-    <div class="highlight">
+    <div class="warn-block">
       <strong>Données de paiement :</strong> les informations de carte bancaire (numéro, date d'expiration, cryptogramme) sont collectées et stockées exclusivement par Stripe, Inc. DevisArtisa n'y a pas accès et ne les enregistre pas sur ses propres serveurs.
     </div>
-  </section>
+  </article>
 
-  <!-- 3 -->
-  <section id="finalites">
-    <div class="section-number">Article 3</div>
-    <h2>Finalités du traitement</h2>
+  <!-- Art. 3 -->
+  <article id="art3">
+    <div class="article-header">
+      <span class="article-num">Art. 03</span>
+      <h2>Finalités du traitement</h2>
+    </div>
     <p>Les données collectées sont utilisées aux fins suivantes :</p>
     <ul>
       <li>Création et gestion de votre compte utilisateur</li>
@@ -291,35 +402,45 @@
       <li>Respect des obligations légales et comptables</li>
     </ul>
     <p>Nous ne traitons vos données qu'à des fins déterminées, explicites et légitimes, conformément à l'art. 6 de la loi fédérale sur la protection des données (nLPD) et à l'art. 6 du Règlement général sur la protection des données (RGPD).</p>
-  </section>
+  </article>
 
-  <!-- 4 -->
-  <section id="base-legale">
-    <div class="section-number">Article 4</div>
-    <h2>Base légale du traitement</h2>
+  <!-- Art. 4 -->
+  <article id="art4">
+    <div class="article-header">
+      <span class="article-num">Art. 04</span>
+      <h2>Base légale du traitement</h2>
+    </div>
     <p>Le traitement de vos données repose sur les bases légales suivantes :</p>
     <ul>
       <li><strong>Exécution du contrat</strong> (art. 6 al. 1 lit. b RGPD / art. 6 nLPD) : pour la gestion de votre compte et la fourniture du service</li>
       <li><strong>Obligation légale</strong> (art. 6 al. 1 lit. c RGPD) : pour le respect des obligations comptables et fiscales suisses</li>
       <li><strong>Intérêt légitime</strong> (art. 6 al. 1 lit. f RGPD) : pour la sécurité du service et la prévention des fraudes</li>
     </ul>
-  </section>
+  </article>
 
-  <!-- 5 -->
-  <section id="sous-traitants">
-    <div class="section-number">Article 5</div>
-    <h2>Sous-traitants et transferts de données</h2>
+  <!-- Art. 5 -->
+  <article id="art5">
+    <div class="article-header">
+      <span class="article-num">Art. 05</span>
+      <h2>Sous-traitants et transferts de données</h2>
+    </div>
     <p>Pour assurer le fonctionnement de DevisArtisa, nous faisons appel aux sous-traitants suivants :</p>
 
-    <div class="card">
-      <div class="card-title">Supabase <span class="badge">Hébergement &amp; Auth</span></div>
+    <div class="subcard">
+      <div class="subcard-title">
+        <strong>Supabase</strong>
+        <span class="badge">Hébergement &amp; Auth</span>
+      </div>
       <p><strong>Rôle :</strong> hébergement de la base de données et gestion de l'authentification.</p>
       <p><strong>Localisation :</strong> serveurs situés en Union européenne (région eu-central).</p>
       <p><strong>Garanties :</strong> Supabase est conforme au RGPD et offre des garanties adéquates pour les transferts de données.</p>
     </div>
 
-    <div class="card">
-      <div class="card-title">Stripe, Inc. <span class="badge">Paiement</span></div>
+    <div class="subcard">
+      <div class="subcard-title">
+        <strong>Stripe, Inc.</strong>
+        <span class="badge">Paiement</span>
+      </div>
       <p><strong>Rôle :</strong> traitement des paiements en ligne.</p>
       <p><strong>Localisation :</strong> États-Unis et Union européenne.</p>
       <p><strong>Garanties :</strong> Stripe est certifié PCI DSS (niveau 1) et conforme au RGPD. Pour les transferts vers les États-Unis, Stripe s'appuie sur les clauses contractuelles types approuvées par la Commission européenne.</p>
@@ -327,36 +448,42 @@
     </div>
 
     <p>Aucune donnée personnelle n'est vendue, louée ou cédée à des tiers à des fins commerciales.</p>
-  </section>
+  </article>
 
-  <!-- 6 -->
-  <section id="conservation">
-    <div class="section-number">Article 6</div>
-    <h2>Durée de conservation</h2>
+  <!-- Art. 6 -->
+  <article id="art6">
+    <div class="article-header">
+      <span class="article-num">Art. 06</span>
+      <h2>Durée de conservation</h2>
+    </div>
     <ul>
       <li><strong>Données de compte :</strong> pendant toute la durée de la relation contractuelle, puis 5 ans après la clôture du compte (délai de prescription ordinaire, art. 127 CO)</li>
       <li><strong>Données de facturation et paiements :</strong> 10 ans, conformément aux obligations comptables suisses (art. 958f CO)</li>
       <li><strong>Logs techniques :</strong> 12 mois maximum</li>
     </ul>
     <p>À l'expiration de ces délais, les données sont supprimées ou anonymisées.</p>
-  </section>
+  </article>
 
-  <!-- 7 -->
-  <section id="cookies">
-    <div class="section-number">Article 7</div>
-    <h2>Cookies et traceurs</h2>
+  <!-- Art. 7 -->
+  <article id="art7">
+    <div class="article-header">
+      <span class="article-num">Art. 07</span>
+      <h2>Cookies et traceurs</h2>
+    </div>
     <p>DevisArtisa utilise uniquement des cookies techniques strictement nécessaires au fonctionnement de l'application :</p>
     <ul>
       <li><strong>Cookies de session d'authentification (Supabase Auth) :</strong> permettent de maintenir votre session active</li>
       <li><strong>Cookies de préférences :</strong> mémorisent vos paramètres d'affichage</li>
     </ul>
     <p>Ces cookies ne collectent aucune donnée à des fins publicitaires ou de suivi comportemental. Aucun cookie tiers à des fins d'analyse ou de marketing n'est utilisé. Leur utilisation ne nécessite pas de consentement préalable au sens du droit suisse et européen.</p>
-  </section>
+  </article>
 
-  <!-- 8 -->
-  <section id="droits">
-    <div class="section-number">Article 8</div>
-    <h2>Vos droits</h2>
+  <!-- Art. 8 -->
+  <article id="art8">
+    <div class="article-header">
+      <span class="article-num">Art. 08</span>
+      <h2>Vos droits</h2>
+    </div>
     <p>Conformément à la nLPD et au RGPD, vous disposez des droits suivants :</p>
     <ul>
       <li><strong>Droit d'accès :</strong> obtenir une copie de vos données personnelles</li>
@@ -366,14 +493,16 @@
       <li><strong>Droit d'opposition :</strong> vous opposer à un traitement fondé sur notre intérêt légitime</li>
       <li><strong>Droit à la limitation :</strong> demander la suspension temporaire du traitement</li>
     </ul>
-    <p>Pour exercer ces droits : <a class="contact-link" href="mailto:protaistimothee@gmail.com">protaistimothee@gmail.com</a></p>
-    <p>Nous nous engageons à répondre dans un délai de 30 jours. En cas de réponse insatisfaisante, vous pouvez adresser une réclamation au <strong>Préposé fédéral à la protection des données et à la transparence (PFPDT)</strong> : <a class="contact-link" href="https://www.edoeb.admin.ch" target="_blank" rel="noopener">www.edoeb.admin.ch</a>.</p>
-  </section>
+    <p>Pour exercer ces droits : <a href="mailto:protaistimothee@gmail.com">protaistimothee@gmail.com</a></p>
+    <p>Nous nous engageons à répondre dans un délai de 30 jours. En cas de réponse insatisfaisante, vous pouvez adresser une réclamation au <strong>Préposé fédéral à la protection des données et à la transparence (PFPDT)</strong> : <a href="https://www.edoeb.admin.ch" target="_blank" rel="noopener">www.edoeb.admin.ch</a>.</p>
+  </article>
 
-  <!-- 9 -->
-  <section id="securite">
-    <div class="section-number">Article 9</div>
-    <h2>Sécurité des données</h2>
+  <!-- Art. 9 -->
+  <article id="art9">
+    <div class="article-header">
+      <span class="article-num">Art. 09</span>
+      <h2>Sécurité des données</h2>
+    </div>
     <p>DevisArtisa met en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données :</p>
     <ul>
       <li>Chiffrement des communications (HTTPS/TLS)</li>
@@ -381,20 +510,24 @@
       <li>Accès aux données limité au personnel strictement habilité</li>
       <li>Paiements traités par Stripe (certifié PCI DSS niveau 1)</li>
     </ul>
-  </section>
+  </article>
 
-  <!-- 10 -->
-  <section id="modifications">
-    <div class="section-number">Article 10</div>
-    <h2>Modifications de la présente politique</h2>
+  <!-- Art. 10 -->
+  <article id="art10">
+    <div class="article-header">
+      <span class="article-num">Art. 10</span>
+      <h2>Modifications de la présente politique</h2>
+    </div>
     <p>La présente politique peut être mise à jour pour refléter des évolutions légales ou des changements dans notre service. La date de dernière mise à jour est indiquée en tête de document.</p>
     <p>En cas de modification substantielle, vous serez informé par e-mail ou via une notification dans l'application.</p>
-  </section>
+  </article>
 
-  <!-- 11 -->
-  <section id="droit-applicable">
-    <div class="section-number">Article 11</div>
-    <h2>Droit applicable</h2>
+  <!-- Art. 11 -->
+  <article id="art11">
+    <div class="article-header">
+      <span class="article-num">Art. 11</span>
+      <h2>Droit applicable</h2>
+    </div>
     <p>La présente politique est régie par le droit suisse, notamment :</p>
     <ul>
       <li>La loi fédérale sur la protection des données (<strong>nLPD</strong>) du 25 septembre 2020, en vigueur depuis le 1er septembre 2023</li>
@@ -402,13 +535,13 @@
       <li>Le Règlement général sur la protection des données (<strong>RGPD — UE 2016/679</strong>), applicable dans la mesure où des personnes résidant dans l'Union européenne sont concernées</li>
     </ul>
     <p>Tout litige relatif à la présente politique sera soumis à la compétence des tribunaux suisses.</p>
-  </section>
+  </article>
 
 </div>
 
 <footer>
-  <strong>DevisArtisa</strong> &mdash; <a class="contact-link" href="mailto:protaistimothee@gmail.com">protaistimothee@gmail.com</a><br>
-  <span style="margin-top:0.4rem;display:block;">Version du 2 juin 2026</span>
+  <strong>DevisArtisa</strong> · <a href="mailto:protaistimothee@gmail.com">protaistimothee@gmail.com</a><br>
+  Version du 2 juin 2026
 </footer>
 
 </body>
