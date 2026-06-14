@@ -360,40 +360,46 @@
       if (!devisId) { showState('state-erreur'); return; }
       try {
         const res = await fetch(
-          `${SUPABASE_URL}/rest/v1/devis?id=eq.${devisId}&select=*,artisans(nom,entreprise,tva_active,taux_tva)`,
+          `${SUPABASE_URL}/rest/v1/devis?id=eq.${devisId}&select=*`,
           { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
         );
-        const [devis] = await res.json();
+        const json = await res.json();
+        console.log('devis:', json);
+    
+        const devis = json[0];
         if (!devis) { showState('state-erreur'); return; }
-        devisData = devis;
-
+    
+        const resA = await fetch(
+          `${SUPABASE_URL}/rest/v1/artisans?id=eq.${devis.artisan_id}&select=nom,entreprise,tva_active,taux_tva`,
+          { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+        );
+        const artisans = await resA.json();
+        console.log('artisan:', artisans);
+        const artisan = artisans[0];
+    
         // Statut déjà traité
         if (devis.statut === 'accepté' || devis.statut === 'refusé') {
           document.getElementById('state-deja-sub').textContent =
-            devis.statut === 'accepté'
-              ? 'Ce devis a été accepté. Merci !'
-              : 'Ce devis a été refusé.';
+            devis.statut === 'accepté' ? 'Ce devis a été accepté. Merci !' : 'Ce devis a été refusé.';
           showState('state-deja');
           return;
         }
-
+    
         // Remplir les infos
         document.getElementById('el-numero').textContent = devis.numero ?? '';
         document.getElementById('el-titre').textContent =
           devis.description ? `Devis — ${devis.description}` : 'Devis de travaux';
         document.getElementById('el-client').textContent = devis.client_nom || '—';
-
-        const artisan = devis.artisans;
         document.getElementById('el-artisan').textContent =
           artisan?.entreprise || artisan?.nom || '—';
-
+    
         // Calcul total
         const lignes = devis.lignes ?? [];
         const totalHT = lignes.reduce((s, l) => s + (l.total ?? 0), 0);
         const tvaRate = artisan?.tva_active ? (artisan?.taux_tva ?? 8.1) / 100 : 0;
         const totalTTC = totalHT * (1 + tvaRate);
         document.getElementById('el-total').textContent = fmt(totalTTC);
-
+    
         // Acompte
         const acomptePct = devis.acompte_pourcentage;
         if (acomptePct && acomptePct > 0) {
@@ -402,12 +408,12 @@
           document.getElementById('el-acompte-sub').textContent =
             `${acomptePct}% du total TTC · requis à la signature`;
           document.getElementById('acompte-block').style.display = 'block';
-
           document.getElementById('btn-accepter').textContent =
             `✅ Accepter et payer l'acompte (${fmt(montantAcompte)})`;
         }
-
+    
       } catch (e) {
+        console.error(e);
         showState('state-erreur');
       }
     }
