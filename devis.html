@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Votre devis — DevisArtisa</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --vert:       #4d9b4e;
+      --vert-clair: #f0fdf4;
+      --vert-bord:  #d1fae5;
+      --noir:       #1a1a1a;
+      --gris:       #6b7280;
+      --gris-clair: #f4f4f0;
+      --bord:       #e5e7eb;
+      --blanc:      #ffffff;
+      --rouge:      #8B1A1A;
+      --rouge-clair:#fef2f2;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: var(--gris-clair);
+      color: var(--noir);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px 60px;
+    }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--vert);
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+    .logo-sub {
+      font-size: 13px;
+      color: var(--gris);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--blanc);
+      border-radius: 20px;
+      border: 1px solid var(--bord);
+      width: 100%;
+      max-width: 520px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+
+    .card-top {
+      background: var(--vert);
+      padding: 28px 28px 24px;
+      color: #fff;
+    }
+    .devis-numero {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 8px;
+    }
+    .devis-titre {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .devis-statut {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.2);
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.4px;
+    }
+
+    .card-body {
+      padding: 24px 28px;
+    }
+
+    /* ── Infos ── */
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--bord);
+      gap: 12px;
+    }
+    .info-row:last-of-type { border-bottom: none; }
+    .info-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gris);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding-top: 2px;
+    }
+    .info-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--noir);
+      text-align: right;
+    }
+    .info-value.total {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--vert);
+    }
+
+    /* ── Acompte ── */
+    .acompte-block {
+      margin-top: 20px;
+      background: var(--vert-clair);
+      border: 1px solid var(--vert-bord);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+    .acompte-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--vert);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+    }
+    .acompte-montant {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--vert);
+    }
+    .acompte-sub {
+      font-size: 12px;
+      color: var(--gris);
+      margin-top: 2px;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: var(--bord);
+      margin: 20px 0;
+    }
+
+    /* ── Boutons ── */
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .btn {
+      width: 100%;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+      letter-spacing: 0.2px;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-accepter {
+      background: var(--vert);
+      color: #fff;
+    }
+    .btn-accepter:hover:not(:disabled) { opacity: 0.88; }
+
+    .btn-refuser {
+      background: transparent;
+      color: var(--rouge);
+      border: 1.5px solid var(--rouge);
+    }
+    .btn-refuser:hover:not(:disabled) { background: var(--rouge-clair); }
+
+    /* ── États ── */
+    .state {
+      display: none;
+      text-align: center;
+      padding: 32px 20px;
+    }
+    .state.visible { display: block; }
+
+    .state-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+    .state-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .state-sub {
+      font-size: 14px;
+      color: var(--gris);
+      line-height: 1.6;
+    }
+    .state-title.vert { color: var(--vert); }
+    .state-title.rouge { color: var(--rouge); }
+
+    /* ── Loading spinner ── */
+    .spinner {
+      display: inline-block;
+      width: 20px; height: 20px;
+      border: 2.5px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: var(--gris);
+      text-align: center;
+    }
+    footer a { color: var(--vert); text-decoration: none; }
+
+    @media (max-width: 480px) {
+      body { padding: 24px 12px 48px; }
+      .card-top, .card-body { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">DevisArtisa</div>
+    <div class="logo-sub">Signature électronique de devis</div>
+  </header>
+
+  <div class="card" id="card-main">
+    <div class="card-top">
+      <div class="devis-numero" id="el-numero">DEV-2026-001</div>
+      <div class="devis-titre" id="el-titre">Devis de travaux</div>
+      <span class="devis-statut">En attente de votre réponse</span>
+    </div>
+
+    <div class="card-body" id="card-body">
+      <div class="info-row">
+        <span class="info-label">Client</span>
+        <span class="info-value" id="el-client">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Artisan</span>
+        <span class="info-value" id="el-artisan">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Total TTC</span>
+        <span class="info-value total" id="el-total">—</span>
+      </div>
+
+      <!-- Acompte — visible seulement si > 0 -->
+      <div class="acompte-block" id="acompte-block" style="display:none">
+        <div class="acompte-label">Acompte requis à la signature</div>
+        <div class="acompte-montant" id="el-acompte-montant">—</div>
+        <div class="acompte-sub" id="el-acompte-sub">—</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="actions">
+        <button class="btn btn-accepter" id="btn-accepter" onclick="handleAction('accepter')">
+          ✅ Accepter ce devis
+        </button>
+        <button class="btn btn-refuser" id="btn-refuser" onclick="handleAction('refuser')">
+          Refuser
+        </button>
+      </div>
+    </div>
+
+    <!-- État : accepté -->
+    <div class="state" id="state-accepte">
+      <div class="state-icon">✅</div>
+      <div class="state-title vert">Devis accepté</div>
+      <div class="state-sub" id="state-accepte-sub">Merci. L'artisan a été notifié.</div>
+    </div>
+
+    <!-- État : paiement en cours -->
+    <div class="state" id="state-paiement">
+      <div class="state-icon">💳</div>
+      <div class="state-title vert">Redirection vers le paiement…</div>
+      <div class="state-sub">Vous allez être redirigé vers la page de paiement sécurisé.</div>
+    </div>
+
+    <!-- État : refusé -->
+    <div class="state" id="state-refuse">
+      <div class="state-icon">❌</div>
+      <div class="state-title rouge">Devis refusé</div>
+      <div class="state-sub">L'artisan a été informé de votre décision.</div>
+    </div>
+
+    <!-- État : erreur -->
+    <div class="state" id="state-erreur">
+      <div class="state-icon">⚠️</div>
+      <div class="state-title">Une erreur est survenue</div>
+      <div class="state-sub">Impossible de traiter votre réponse. Contactez directement l'artisan.</div>
+    </div>
+
+    <!-- État : déjà traité -->
+    <div class="state" id="state-deja">
+      <div class="state-icon">ℹ️</div>
+      <div class="state-title">Devis déjà traité</div>
+      <div class="state-sub" id="state-deja-sub">Ce devis a déjà été accepté ou refusé.</div>
+    </div>
+  </div>
+
+  <footer>
+    Propulsé par <a href="https://devisartisa.ch">DevisArtisa</a> &nbsp;·&nbsp;
+    Document sécurisé
+  </footer>
+
+  <script>
+    // ── Config ──────────────────────────────────────────
+    const SUPABASE_URL = 'https://osuxusqeumunbkiuyuyo.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zdXh1c3FldW11bmJraXV5dXlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1NDYwMDUsImV4cCI6MjA5NTEyMjAwNX0.SkbcWDy00RWaLhBybFvRAigdXZEP0S3ULvkHidhD-ZQ';
+
+    // ── Récupère l'ID depuis l'URL : /devis?id=XXX ou /devis/XXX ──
+    const params = new URLSearchParams(window.location.search);
+    const devisId = params.get('id') || window.location.pathname.split('/').pop();
+
+    let devisData = null;
+
+    // ── Helpers ──────────────────────────────────────────
+    function showState(id) {
+      document.getElementById('card-body').style.display = 'none';
+      ['state-accepte','state-paiement','state-refuse','state-erreur','state-deja']
+        .forEach(s => document.getElementById(s).classList.remove('visible'));
+      document.getElementById(id).classList.add('visible');
+    }
+
+    function fmt(montant) {
+      return new Intl.NumberFormat('fr-CH', { style: 'currency', currency: 'CHF' }).format(montant);
+    }
+
+    // ── Chargement du devis ──────────────────────────────
+    async function chargerDevis() {
+      if (!devisId) { showState('state-erreur'); return; }
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/devis?id=eq.${devisId}&select=*,artisans(nom,entreprise,tva_active,taux_tva)`,
+          { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+        );
+        const [devis] = await res.json();
+        if (!devis) { showState('state-erreur'); return; }
+        devisData = devis;
+
+        // Statut déjà traité
+        if (devis.statut === 'accepté' || devis.statut === 'refusé') {
+          document.getElementById('state-deja-sub').textContent =
+            devis.statut === 'accepté'
+              ? 'Ce devis a été accepté. Merci !'
+              : 'Ce devis a été refusé.';
+          showState('state-deja');
+          return;
+        }
+
+        // Remplir les infos
+        document.getElementById('el-numero').textContent = devis.numero ?? '';
+        document.getElementById('el-titre').textContent =
+          devis.description ? `Devis — ${devis.description}` : 'Devis de travaux';
+        document.getElementById('el-client').textContent = devis.client_nom || '—';
+
+        const artisan = devis.artisans;
+        document.getElementById('el-artisan').textContent =
+          artisan?.entreprise || artisan?.nom || '—';
+
+        // Calcul total
+        const lignes = devis.lignes ?? [];
+        const totalHT = lignes.reduce((s, l) => s + (l.total ?? 0), 0);
+        const tvaRate = artisan?.tva_active ? (artisan?.taux_tva ?? 8.1) / 100 : 0;
+        const totalTTC = totalHT * (1 + tvaRate);
+        document.getElementById('el-total').textContent = fmt(totalTTC);
+
+        // Acompte
+        const acomptePct = devis.acompte_pourcentage;
+        if (acomptePct && acomptePct > 0) {
+          const montantAcompte = totalTTC * (acomptePct / 100);
+          document.getElementById('el-acompte-montant').textContent = fmt(montantAcompte);
+          document.getElementById('el-acompte-sub').textContent =
+            `${acomptePct}% du total TTC · requis à la signature`;
+          document.getElementById('acompte-block').style.display = 'block';
+
+          document.getElementById('btn-accepter').textContent =
+            `✅ Accepter et payer l'acompte (${fmt(montantAcompte)})`;
+        }
+
+      } catch (e) {
+        showState('state-erreur');
+      }
+    }
+
+    // ── Action accepter / refuser ────────────────────────
+    async function handleAction(action) {
+      const btnA = document.getElementById('btn-accepter');
+      const btnR = document.getElementById('btn-refuser');
+      btnA.disabled = true;
+      btnR.disabled = true;
+
+      if (action === 'accepter') {
+        btnA.innerHTML = '<span class="spinner"></span> Traitement…';
+      } else {
+        btnR.textContent = 'Traitement…';
+      }
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/accept-devis`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            apikey: SUPABASE_KEY,
+            Authorization: `Bearer ${SUPABASE_KEY}`,
+          },
+          body: JSON.stringify({ devis_id: devisId, action }),
+        });
+        const data = await res.json();
+
+        if (action === 'refuser') {
+          showState('state-refuse');
+          return;
+        }
+
+        // Accepté
+        if (data.redirect) {
+          // Il y a un acompte → Stripe
+          showState('state-paiement');
+          setTimeout(() => { window.location.href = data.redirect; }, 1200);
+        } else {
+          // Pas d'acompte → confirmation simple
+          document.getElementById('state-accepte-sub').textContent =
+            'Merci d\'avoir accepté ce devis. L\'artisan a été notifié et vous contactera prochainement.';
+          showState('state-accepte');
+        }
+
+      } catch (e) {
+        btnA.disabled = false;
+        btnR.disabled = false;
+        btnA.textContent = '✅ Accepter ce devis';
+        btnR.textContent = 'Refuser';
+        showState('state-erreur');
+      }
+    }
+
+    // ── Init ─────────────────────────────────────────────
+    chargerDevis();
+  </script>
+</body>
+</html>
