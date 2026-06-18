@@ -340,10 +340,6 @@
     // ── Récupère l'ID depuis l'URL : /devis?id=XXX ou /devis/XXX ──
     const params = new URLSearchParams(window.location.search);
     const devisId = params.get('id') || window.location.pathname.split('/').pop();
-    const resA = await fetch(
-      `${SUPABASE_URL}/rest/v1/artisans?id=eq.${devis.artisan_id}&select=nom,entreprise,tva_active,taux_tva,plan,stripe_connected`,
-      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
-    );
     let devisData = null;
 
     // ── Helpers ──────────────────────────────────────────
