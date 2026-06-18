@@ -336,11 +336,14 @@
     // ── Config ──────────────────────────────────────────
     const SUPABASE_URL = 'https://osuxusqeumunbkiuyuyo.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zdXh1c3FldW11bmJraXV5dXlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1NDYwMDUsImV4cCI6MjA5NTEyMjAwNX0.SkbcWDy00RWaLhBybFvRAigdXZEP0S3ULvkHidhD-ZQ';
-
+    
     // ── Récupère l'ID depuis l'URL : /devis?id=XXX ou /devis/XXX ──
     const params = new URLSearchParams(window.location.search);
     const devisId = params.get('id') || window.location.pathname.split('/').pop();
-
+    const resA = await fetch(
+      `${SUPABASE_URL}/rest/v1/artisans?id=eq.${devis.artisan_id}&select=nom,entreprise,tva_active,taux_tva,plan,stripe_connected`,
+      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+    );
     let devisData = null;
 
     // ── Helpers ──────────────────────────────────────────
@@ -402,14 +405,17 @@
     
         // Acompte
         const acomptePct = devis.acompte_pourcentage;
-        if (acomptePct && acomptePct > 0) {
-          const montantAcompte = totalTTC * (acomptePct / 100);
-          document.getElementById('el-acompte-montant').textContent = fmt(montantAcompte);
-          document.getElementById('el-acompte-sub').textContent =
-            `${acomptePct}% du total TTC · requis à la signature`;
-          document.getElementById('acompte-block').style.display = 'block';
+        const isPremium = artisan?.plan === 'premium' && artisan?.stripe_connected;
+        if (acomptePct && acomptePct > 0 && isPremium) {
+          // affiche le bloc acompte avec Stripe
           document.getElementById('btn-accepter').textContent =
             `✅ Accepter et payer l'acompte (${fmt(montantAcompte)})`;
+        } else if (acomptePct && acomptePct > 0) {
+          // affiche le bloc acompte mais sans mention Stripe
+          document.getElementById('el-acompte-sub').textContent =
+            `${acomptePct}% du total TTC · à régler selon les instructions de l'artisan`;
+          document.getElementById('acompte-block').style.display = 'block';
+          // bouton reste "Accepter ce devis" sans mention paiement
         }
     
       } catch (e) {
