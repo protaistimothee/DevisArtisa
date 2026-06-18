@@ -371,7 +371,9 @@
           { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
         );
         const artisan = (await resA.json())[0];
-    
+        console.log('artisan complet:', artisan);
+        console.log('nom:', artisan?.nom, 'entreprise:', artisan?.entreprise);
+        
         if (devis.statut === 'accepté' || devis.statut === 'refusé') {
           document.getElementById('state-deja-sub').textContent =
             devis.statut === 'accepté' ? 'Ce devis a été accepté. Merci !' : 'Ce devis a été refusé.';
