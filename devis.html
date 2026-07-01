@@ -280,7 +280,19 @@
       </div>
 
       <div class="divider"></div>
-
+      <div class="signature-block" style="margin-top:20px">
+        <label style="font-size:13px;font-weight:600;color:var(--gris)">
+          Nom complet (signature électronique)
+        </label>
+        <input type="text" id="input-nom-signature" 
+          placeholder="Ex: Jean Dupont" 
+          style="width:100%;padding:12px;margin-top:6px;border:1px solid var(--bord);border-radius:8px;font-size:15px" />
+      
+        <label style="display:flex;align-items:flex-start;gap:8px;margin-top:14px;font-size:13px;color:var(--gris)">
+          <input type="checkbox" id="check-consentement" style="margin-top:2px" />
+          Je certifie avoir pris connaissance de ce devis et l'accepter dans son intégralité.
+        </label>
+      </div>
       <div class="actions">
         <button class="btn btn-accepter" id="btn-accepter" onclick="handleAction('accepter')">
           ✅ Accepter ce devis
@@ -419,6 +431,13 @@
     }
     // ── Action accepter / refuser ────────────────────────
     async function handleAction(action) {
+      if (action === 'accepter') {
+        const nom = document.getElementById('input-nom-signature').value.trim();
+        const consent = document.getElementById('check-consentement').checked;
+        if (!nom || !consent) {
+          alert('Merci de saisir votre nom et de cocher la case de consentement.');
+          return;
+        }
       const btnA = document.getElementById('btn-accepter');
       const btnR = document.getElementById('btn-refuser');
       btnA.disabled = true;
@@ -438,7 +457,7 @@
             apikey: SUPABASE_KEY,
             Authorization: `Bearer ${SUPABASE_KEY}`,
           },
-          body: JSON.stringify({ devis_id: devisId, action }),
+          body: JSON.stringify({ devis_id: devisId, action, nom_signature: nom }),
         });
         const data = await res.json();
 
