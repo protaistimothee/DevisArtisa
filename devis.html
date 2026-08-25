@@ -31,7 +31,6 @@
       padding: 40px 16px 60px;
     }
 
-    /* ── Header ── */
     header {
       text-align: center;
       margin-bottom: 36px;
@@ -49,7 +48,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* ── Card ── */
     .card {
       background: var(--blanc);
       border-radius: 20px;
@@ -93,7 +91,6 @@
       padding: 24px 28px;
     }
 
-    /* ── Infos ── */
     .info-row {
       display: flex;
       justify-content: space-between;
@@ -123,7 +120,6 @@
       color: var(--vert);
     }
 
-    /* ── Acompte ── */
     .acompte-block {
       margin-top: 20px;
       background: var(--vert-clair);
@@ -150,14 +146,12 @@
       margin-top: 2px;
     }
 
-    /* ── Divider ── */
     .divider {
       height: 1px;
       background: var(--bord);
       margin: 20px 0;
     }
 
-    /* ── Boutons ── */
     .actions {
       display: flex;
       flex-direction: column;
@@ -191,7 +185,6 @@
     }
     .btn-refuser:hover:not(:disabled) { background: var(--rouge-clair); }
 
-    /* ── États ── */
     .state {
       display: none;
       text-align: center;
@@ -216,7 +209,6 @@
     .state-title.vert { color: var(--vert); }
     .state-title.rouge { color: var(--rouge); }
 
-    /* ── Loading spinner ── */
     .spinner {
       display: inline-block;
       width: 20px; height: 20px;
@@ -229,7 +221,6 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── Footer ── */
     footer {
       margin-top: 32px;
       font-size: 12px;
@@ -272,7 +263,6 @@
         <span class="info-value total" id="el-total">—</span>
       </div>
 
-      <!-- Acompte — visible seulement si > 0 -->
       <div class="acompte-block" id="acompte-block" style="display:none">
         <div class="acompte-label">Acompte requis à la signature</div>
         <div class="acompte-montant" id="el-acompte-montant">—</div>
@@ -303,35 +293,30 @@
       </div>
     </div>
 
-    <!-- État : accepté -->
     <div class="state" id="state-accepte">
       <div class="state-icon">✅</div>
       <div class="state-title vert">Devis accepté</div>
       <div class="state-sub" id="state-accepte-sub">Merci. L'artisan a été notifié.</div>
     </div>
 
-    <!-- État : paiement en cours -->
     <div class="state" id="state-paiement">
       <div class="state-icon">💳</div>
       <div class="state-title vert">Redirection vers le paiement…</div>
       <div class="state-sub">Vous allez être redirigé vers la page de paiement sécurisé.</div>
     </div>
 
-    <!-- État : refusé -->
     <div class="state" id="state-refuse">
       <div class="state-icon">❌</div>
       <div class="state-title rouge">Devis refusé</div>
       <div class="state-sub">L'artisan a été informé de votre décision.</div>
     </div>
 
-    <!-- État : erreur -->
     <div class="state" id="state-erreur">
       <div class="state-icon">⚠️</div>
       <div class="state-title">Une erreur est survenue</div>
       <div class="state-sub">Impossible de traiter votre réponse. Contactez directement l'artisan.</div>
     </div>
 
-    <!-- État : déjà traité -->
     <div class="state" id="state-deja">
       <div class="state-icon">ℹ️</div>
       <div class="state-title">Devis déjà traité</div>
@@ -348,13 +333,23 @@
     // ── Config ──────────────────────────────────────────
     const SUPABASE_URL = 'https://osuxusqeumunbkiuyuyo.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zdXh1c3FldW11bmJraXV5dXlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1NDYwMDUsImV4cCI6MjA5NTEyMjAwNX0.SkbcWDy00RWaLhBybFvRAigdXZEP0S3ULvkHidhD-ZQ';
-    
-    // ── Récupère l'ID depuis l'URL : /devis?id=XXX ou /devis/XXX ──
+
+    // ⚠️ SÉCURITÉ : cette clé est publique (anon). La protection réelle des
+    // données doit venir des policies RLS côté Supabase, pas du filtre
+    // "select=..." ci-dessous — n'importe qui peut rejouer ces requêtes
+    // avec select=* depuis les devtools. Vérifiez que :
+    //  1) la table `devis` n'est lisible par `anon` que via un identifiant
+    //     non énumérable (UUID aléatoire), jamais via `numero` (séquentiel) ;
+    //  2) la table `artisans` n'expose pas de colonnes sensibles (email, etc.)
+    //     à `anon` même en cas de select=* ;
+    //  3) le montant réellement débité côté Stripe est recalculé côté
+    //     serveur dans la fonction `accept-devis`, pas repris tel quel du
+    //     total TTC affiché ici.
+
     const params = new URLSearchParams(window.location.search);
     const devisId = params.get('id') || window.location.pathname.split('/').pop();
     let devisData = null;
 
-    // ── Helpers ──────────────────────────────────────────
     function showState(id) {
       document.getElementById('card-body').style.display = 'none';
       ['state-accepte','state-paiement','state-refuse','state-erreur','state-deja']
@@ -366,7 +361,6 @@
       return new Intl.NumberFormat('fr-CH', { style: 'currency', currency: 'CHF' }).format(montant);
     }
 
-    // ── Chargement du devis ──────────────────────────────
     async function chargerDevis() {
       if (!devisId) { showState('state-erreur'); return; }
       try {
@@ -377,42 +371,40 @@
         const json = await res.json();
         const devis = json[0];
         if (!devis) { showState('state-erreur'); return; }
-    
+
         const resA = await fetch(
           `${SUPABASE_URL}/rest/v1/artisans?id=eq.${devis.artisan_id}&select=nom,entreprise,tva_active,taux_tva,plan,stripe_connected`,
           { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
         );
         const artisan = (await resA.json())[0];
-        console.log('artisan complet:', artisan);
-        console.log('nom:', artisan?.nom, 'entreprise:', artisan?.entreprise);
-        
+
         if (devis.statut === 'accepté' || devis.statut === 'refusé') {
           document.getElementById('state-deja-sub').textContent =
             devis.statut === 'accepté' ? 'Ce devis a été accepté. Merci !' : 'Ce devis a été refusé.';
           showState('state-deja');
           return;
         }
-    
+
         document.getElementById('el-numero').textContent = devis.numero ?? '';
         document.getElementById('el-titre').textContent =
           devis.description ? `Devis — ${devis.description}` : 'Devis de travaux';
         document.getElementById('el-client').textContent = devis.client_nom || '—';
         document.getElementById('el-artisan').textContent = artisan?.entreprise || artisan?.nom || '—';
-    
+
         const lignes = devis.lignes ?? [];
         const totalHT = lignes.reduce((s, l) => s + (l.total ?? 0), 0);
         const tvaRate = artisan?.tva_active ? (artisan?.taux_tva ?? 8.1) / 100 : 0;
         const totalTTC = totalHT * (1 + tvaRate);
         document.getElementById('el-total').textContent = fmt(totalTTC);
-    
+
         const acomptePct = devis.acompte_pourcentage;
         const isPremium = artisan?.plan === 'premium' && artisan?.stripe_connected;
-    
+
         if (acomptePct && acomptePct > 0) {
-          const montantAcompte = totalTTC * (acomptePct / 100); // ← défini ici
+          const montantAcompte = totalTTC * (acomptePct / 100);
           document.getElementById('el-acompte-montant').textContent = fmt(montantAcompte);
           document.getElementById('acompte-block').style.display = 'block';
-    
+
           if (isPremium) {
             document.getElementById('el-acompte-sub').textContent =
               `${acomptePct}% du total TTC · requis à la signature`;
@@ -423,13 +415,13 @@
               `${acomptePct}% du total TTC · à régler selon les instructions de l'artisan`;
           }
         }
-    
+
       } catch (e) {
         console.error(e);
         showState('state-erreur');
       }
     }
-    // ── Action accepter / refuser ────────────────────────
+
     async function handleAction(action) {
       if (action === 'accepter') {
         const nom = document.getElementById('input-nom-signature').value.trim();
@@ -439,19 +431,19 @@
           return;
         }
       }
-    
+
       const nomSignature = document.getElementById('input-nom-signature').value.trim();
       const btnA = document.getElementById('btn-accepter');
       const btnR = document.getElementById('btn-refuser');
       btnA.disabled = true;
       btnR.disabled = true;
-    
+
       if (action === 'accepter') {
         btnA.innerHTML = '<span class="spinner"></span> Traitement…';
       } else {
         btnR.textContent = 'Traitement…';
       }
-    
+
       try {
         const res = await fetch(`${SUPABASE_URL}/functions/v1/accept-devis`, {
           method: 'POST',
@@ -463,24 +455,21 @@
           body: JSON.stringify({ devis_id: devisId, action, nom_signature: nomSignature }),
         });
         const data = await res.json();
-    
+
         if (action === 'refuser') {
           showState('state-refuse');
           return;
         }
-    
-        // Accepté
+
         if (data.redirect) {
-          // Il y a un acompte → Stripe
           showState('state-paiement');
           setTimeout(() => { window.location.href = data.redirect; }, 1200);
         } else {
-          // Pas d'acompte → confirmation simple
           document.getElementById('state-accepte-sub').textContent =
             'Merci d\'avoir accepté ce devis. L\'artisan a été notifié et vous contactera prochainement.';
           showState('state-accepte');
         }
-    
+
       } catch (e) {
         btnA.disabled = false;
         btnR.disabled = false;
@@ -489,7 +478,7 @@
         showState('state-erreur');
       }
     }
-    // ── Init ─────────────────────────────────────────────
+
     chargerDevis();
   </script>
 </body>
