@@ -7,7 +7,7 @@
 <meta name="description" content="Découvrez les abonnements DevisArtisa : Gratuit, Basique (29 CHF/mois), Pro (39 CHF/mois) et Premium (49 CHF/mois). Devis et factures par dictée vocale pour les artisans suisses.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
  
 <!-- ============================================================
      Données structurées (JSON-LD) : permet à Google / aux assistants IA
@@ -32,25 +32,26 @@
  
 <style>
   :root{
-    --primary:#0e4ba1;
-    --primary-dark:#0a3a80;
-    --ink:#1a2233;
-    --muted:#5c6779;
-    --line:#e4e8f0;
-    --bg:#f6f8fc;
-    --card-bg:#ffffff;
-    --radius:20px;
-    --shadow:0 12px 32px rgba(14,75,161,0.10);
+    --bg:#FFFDF5;
+    --surface:#ffffff;
+    --border:#d6e4e0;
+    --text:#1a2e29;
+    --muted:#7a9990;
+    --accent:#3d6b5e;
+    --accent-hover:#2f5549;
+    --radius:16px;
+    --shadow:0 2px 16px rgba(61,107,94,0.08);
+    --shadow-hover:0 10px 32px rgba(61,107,94,0.16);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
     background:var(--bg);
-    color:var(--ink);
+    color:var(--text);
     font-family:'Inter',system-ui,-apple-system,sans-serif;
     line-height:1.5;
   }
-  h1,h2,h3,.brand{font-family:'Poppins',system-ui,sans-serif;}
+  h1,h2,h3,.brand{font-family:'Inter',system-ui,sans-serif;}
  
   .page{
     max-width:1180px;
@@ -62,31 +63,43 @@
     text-align:center;
     margin-bottom:clamp(36px,6vw,64px);
   }
+  .logo-mark{
+    width:40px;
+    height:40px;
+    background:var(--accent);
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 16px;
+  }
+  .logo-mark svg{width:20px;height:20px;}
   header.hero .brand{
     display:inline-block;
-    font-weight:700;
-    color:var(--primary);
-    font-size:clamp(14px,2vw,16px);
+    font-weight:600;
+    color:var(--accent);
+    font-size:clamp(13px,2vw,14px);
     letter-spacing:0.06em;
     text-transform:uppercase;
     margin-bottom:12px;
   }
   header.hero h1{
-    font-size:clamp(28px,5vw,44px);
+    font-size:clamp(26px,4.6vw,40px);
     font-weight:700;
+    letter-spacing:-0.02em;
     margin:0 0 14px;
   }
   header.hero p{
     color:var(--muted);
-    font-size:clamp(15px,2.2vw,18px);
-    max-width:620px;
+    font-size:clamp(15px,2.2vw,17px);
+    max-width:600px;
     margin:0 auto;
   }
  
   .plans{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:clamp(16px,2vw,24px);
+    gap:clamp(16px,2vw,20px);
   }
   @media (max-width:980px){
     .plans{grid-template-columns:repeat(2,1fr);}
@@ -96,10 +109,10 @@
   }
  
   .plan-card{
-    background:var(--card-bg);
-    border:1px solid var(--line);
+    background:var(--surface);
+    border:1px solid var(--border);
     border-radius:var(--radius);
-    padding:clamp(24px,3vw,30px) clamp(20px,2.6vw,26px);
+    padding:clamp(22px,3vw,28px) clamp(20px,2.6vw,24px);
     display:flex;
     flex-direction:column;
     box-shadow:var(--shadow);
@@ -108,17 +121,17 @@
   }
   .plan-card:hover{
     transform:translateY(-4px);
-    box-shadow:0 20px 44px rgba(14,75,161,0.16);
+    box-shadow:var(--shadow-hover);
   }
   .plan-card.featured{
-    border:2px solid var(--primary);
+    border:2px solid var(--accent);
   }
   .badge-top{
     position:absolute;
     top:-13px;
     left:50%;
     transform:translateX(-50%);
-    background:var(--primary);
+    background:var(--accent);
     color:#fff;
     font-size:12px;
     font-weight:600;
@@ -128,8 +141,9 @@
   }
  
   .plan-name{
-    font-size:clamp(18px,2.4vw,20px);
+    font-size:clamp(17px,2.4vw,19px);
     font-weight:600;
+    letter-spacing:-0.01em;
     margin:4px 0 10px;
   }
   .plan-price{
@@ -139,9 +153,10 @@
     margin-bottom:4px;
   }
   .plan-price .amount{
-    font-size:clamp(30px,4vw,36px);
+    font-size:clamp(28px,4vw,34px);
     font-weight:700;
-    color:var(--primary);
+    letter-spacing:-0.02em;
+    color:var(--accent);
   }
   .plan-price .unit{
     font-size:14px;
@@ -165,7 +180,7 @@
     align-items:flex-start;
     gap:10px;
     font-size:14.5px;
-    color:var(--ink);
+    color:var(--text);
     margin-bottom:12px;
   }
   .plan-features li svg{
@@ -178,23 +193,23 @@
     align-items:center;
     justify-content:center;
     width:100%;
-    padding:13px 18px;
-    border-radius:12px;
+    padding:0.75rem 18px;
+    border-radius:10px;
     border:none;
     font-family:inherit;
     font-size:15px;
-    font-weight:600;
+    font-weight:500;
     cursor:pointer;
-    background:var(--primary);
+    background:var(--accent);
     color:#fff;
     transition:background .15s ease;
   }
-  .cta:hover{background:var(--primary-dark);}
+  .cta:hover{background:var(--accent-hover);}
   .plan-card:not(.featured) .cta{
-    background:var(--ink);
+    background:var(--text);
   }
   .plan-card:not(.featured) .cta:hover{
-    background:#000;
+    background:#0f1c18;
   }
  
   footer.note{
@@ -208,7 +223,7 @@
   .modal-overlay{
     position:fixed;
     inset:0;
-    background:rgba(10,18,32,0.55);
+    background:rgba(26,46,41,0.55);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -223,14 +238,15 @@
     pointer-events:auto;
   }
   .modal-box{
-    background:#fff;
+    background:var(--surface);
+    border:1px solid var(--border);
     border-radius:var(--radius);
     max-width:380px;
     width:100%;
     padding:clamp(24px,4vw,32px);
     text-align:center;
     position:relative;
-    box-shadow:0 30px 60px rgba(0,0,0,0.25);
+    box-shadow:0 30px 60px rgba(26,46,41,0.25);
   }
   .modal-close{
     position:absolute;
@@ -248,6 +264,8 @@
   }
   .modal-box h3{
     font-size:19px;
+    font-weight:600;
+    letter-spacing:-0.01em;
     margin:6px 0 6px;
   }
   .modal-box p{
@@ -259,14 +277,14 @@
     display:inline-block;
     padding:14px;
     background:#fff;
-    border:1px solid var(--line);
-    border-radius:16px;
+    border:1px solid var(--border);
+    border-radius:14px;
     margin-bottom:18px;
   }
   .modal-plan-tag{
     display:inline-block;
     background:var(--bg);
-    color:var(--primary);
+    color:var(--accent);
     font-weight:600;
     font-size:13px;
     padding:4px 12px;
@@ -285,14 +303,14 @@
     justify-content:center;
     gap:8px;
     padding:11px 14px;
-    border-radius:10px;
-    border:1px solid var(--line);
-    color:var(--ink);
+    border-radius:8px;
+    border:1px solid var(--border);
+    color:var(--text);
     text-decoration:none;
     font-size:14px;
     font-weight:500;
   }
-  .store-link:hover{border-color:var(--primary); color:var(--primary);}
+  .store-link:hover{border-color:var(--accent); color:var(--accent);}
  
   /* Highlight pulse when arriving from a QR scan with ?plan=... */
   .plan-card.highlight{
@@ -300,7 +318,7 @@
   }
   @keyframes pulse-border{
     0%,100%{box-shadow:var(--shadow);}
-    50%{box-shadow:0 0 0 6px rgba(14,75,161,0.18), var(--shadow);}
+    50%{box-shadow:0 0 0 6px rgba(61,107,94,0.18), var(--shadow);}
   }
 </style>
 </head>
@@ -309,6 +327,11 @@
 <div class="page">
  
   <header class="hero">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/>
+      </svg>
+    </div>
     <span class="brand">DevisArtisa</span>
     <h1>Un abonnement pour chaque taille de chantier</h1>
     <p>Devis et factures par dictée vocale, directement depuis votre téléphone. Changez de formule à tout moment.</p>
@@ -445,7 +468,7 @@
         text: pageUrlForPlan(plan),
         width: 168,
         height: 168,
-        colorDark: "#0e4ba1",
+        colorDark: "#3d6b5e",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.M
       });
@@ -453,7 +476,7 @@
     } catch (err) {
       // Bibliothèque QR indisponible (bloqueur, hors-ligne, CDN down) :
       // on masque le bloc QR plutôt que de laisser un espace vide,
-      // les liens App Store / Play Play ci-dessous restent utilisables.
+      // les liens App Store / Play Store ci-dessous restent utilisables.
       if (qrWrap) qrWrap.style.display = "none";
     }
     overlay.classList.add("open");
