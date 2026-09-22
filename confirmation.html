@@ -71,7 +71,24 @@
       font-size: 0.875rem;
       color: var(--muted);
       line-height: 1.6;
+      margin-bottom: 1.25rem;
     }
+
+    .btn-ouvrir {
+      display: none;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.75rem 1.25rem;
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn-ouvrir.visible { display: block; }
   </style>
 </head>
 <body>
@@ -83,8 +100,36 @@
       </svg>
     </div>
     <h1>Email vérifié</h1>
-    <p class="subtitle">Votre adresse email a bien été confirmée. Vous pouvez maintenant retourner sur l'application.</p>
+    <p class="subtitle" id="subtitle">Votre adresse email a bien été confirmée. Vous pouvez maintenant retourner sur l'application.</p>
+    <button class="btn-ouvrir" id="btnOuvrir">Ouvrir l'application</button>
   </div>
+
+  <script>
+    var DEEP_LINK = 'devisartisa://';
+    var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    var subtitle = document.getElementById('subtitle');
+    var btnOuvrir = document.getElementById('btnOuvrir');
+
+    function ouvrirApp() {
+      window.location.href = DEEP_LINK;
+    }
+
+    if (isMobile) {
+      subtitle.textContent = "Votre adresse email a bien été confirmée. Redirection vers l'application...";
+      btnOuvrir.classList.add('visible');
+      btnOuvrir.addEventListener('click', ouvrirApp);
+
+      // Tentative de redirection automatique.
+      setTimeout(ouvrirApp, 600);
+
+      // Si après quelques secondes on est toujours sur cette page (l'app n'a
+      // pas pris le relais — app non installée, ou redirection auto bloquée),
+      // on affiche un message adapté pour guider vers le bouton manuel.
+      setTimeout(function () {
+        subtitle.textContent = "Votre adresse email a bien été confirmée. Si l'application ne s'est pas ouverte automatiquement, appuyez sur le bouton ci-dessous.";
+      }, 2500);
+    }
+  </script>
 
 </body>
 </html>
