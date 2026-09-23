@@ -20,10 +20,15 @@
           Compte activé !
         </p>
       </div>
-      <div data-aos="fade-up" data-aos-delay="300">
+      <div data-aos="fade-up" data-aos-delay="300" id="redirect-message">
         <p style="color:#3d6b5e; font-size:16px; line-height:1.6;">
-          La confirmation Stripe peut prendre du temps. Vous pouvez maintenant retourner sur l'application.
+          La confirmation Stripe peut prendre du temps. Ouverture de l'application...
         </p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="400" id="manual-link" style="display:none; margin-top:16px;">
+        <a href="#" id="app-link" style="color:#3d6b5e; font-weight:600; text-decoration:underline;">
+          Ouvrir manuellement
+        </a>
       </div>
       <div data-aos="fade-up" data-aos-delay="500" style="margin-top:20px;">
         <p style="font-size:12px; color:#3d6b5e;">🛡️ Paiements sécurisés via Stripe</p>
@@ -31,3 +36,39 @@
     </div>
   </div>
 </div>
+
+<script>
+(function() {
+  var ua = navigator.userAgent || navigator.vendor || window.opera;
+  var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isAndroid = /android/i.test(ua);
+  var isMobile = isIOS || isAndroid;
+
+  var DEEP_LINK = "devisartisa://";
+  var APP_STORE_URL = "https://apps.apple.com/app/id6805438296";
+  var PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=tprotais.devisartisa"; // à remplacer
+
+  var STORE_URL = isIOS ? APP_STORE_URL : (isAndroid ? PLAY_STORE_URL : null);
+
+  if (isMobile) {
+    document.getElementById("app-link").href = STORE_URL;
+    document.getElementById("manual-link").style.display = "block";
+
+    var fallbackTimer = setTimeout(function() {
+      window.location.href = STORE_URL;
+    }, 2000);
+
+    document.addEventListener("visibilitychange", function() {
+      if (document.hidden) clearTimeout(fallbackTimer);
+    });
+    window.addEventListener("pagehide", function() {
+      clearTimeout(fallbackTimer);
+    });
+
+    window.location.href = DEEP_LINK;
+  } else {
+    document.getElementById("redirect-message").innerHTML =
+      '<p style="color:#3d6b5e; font-size:16px; line-height:1.6;">La confirmation Stripe peut prendre du temps. Vous pouvez maintenant retourner sur l\'application.</p>';
+  }
+})();
+</script>
