@@ -7,7 +7,7 @@
 <title>Bon cadeau DevisArtisa</title>
 <!--
   Page de validation des bons, pour le vendeur au comptoir.
-  À mettre en ligne à l'adresse https://devisartisa.ch/bon (ou changer BON_PAGE_URL
+  À mettre en ligne à l'adresse https://protaistimothee.github.io/DevisArtisa/bon (ou changer BON_PAGE_URL
   côté serveur et dans l'app). Le QR du bon ouvre cette page avec ?t=<jeton>.
   Seule chose à remplir : l'URL de ton projet Supabase ci-dessous.
 -->
@@ -60,8 +60,8 @@
 <main id="app"></main>
 
 <script>
-  // ⚙️ À remplir : URL de ton projet Supabase (Settings > API > Project URL)
-  const FONCTION = 'https://VOTRE-PROJET.supabase.co/functions/v1/valider-bon';
+  // URL de la fonction valider-bon (même projet Supabase que l'app)
+  const FONCTION = 'https://osuxusqeumunbkiuyuyo.supabase.co/functions/v1/valider-bon';
 
   const params = new URLSearchParams(location.search);
   const jeton = params.get('t');
