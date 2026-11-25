@@ -364,19 +364,43 @@
     async function chargerDevis() {
       if (!devisId) { showState('state-erreur'); return; }
       try {
-        const res = await fetch(
-          `${SUPABASE_URL}/rest/v1/devis?id=eq.${devisId}&select=*`,
-          { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
-        );
-        const json = await res.json();
-        const devis = json[0];
+        // Lecture par la fonction devis_pour_client : elle renvoie seulement
+        // CE devis (le lien contient son identifiant) et les infos utiles de
+        // l'artisan. Les tables devis et artisans ne sont plus lisibles
+        // directement (correctif sécurité du 25.11.2026).
+        const headers = {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json',
+        };
+        let devis, artisan;
+        const resRpc = await fetch(`${SUPABASE_URL}/rest/v1/rpc/devis_pour_client`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ p_id: devisId }),
+        });
+        if (resRpc.ok) {
+          const data = await resRpc.json();
+          devis = data?.devis;
+          artisan = data?.artisan;
+        } else if (resRpc.status === 404) {
+          // Fonction pas encore créée en base : ancienne lecture directe.
+          // À supprimer une fois la migration 20261125_devis_client_prive.sql lancée.
+          const res = await fetch(
+            `${SUPABASE_URL}/rest/v1/devis?id=eq.${devisId}&select=*`,
+            { headers }
+          );
+          devis = (await res.json())[0];
+          if (devis) {
+            const resA = await fetch(
+              `${SUPABASE_URL}/rest/v1/artisans_public?id=eq.${devis.artisan_id}&select=*`,
+              { headers }
+            );
+            artisan = (await resA.json())[0];
+            if (artisan) artisan.paiement_en_ligne = artisan.plan === 'premium' && !!artisan.stripe_connected;
+          }
+        }
         if (!devis) { showState('state-erreur'); return; }
-
-        const resA = await fetch(
-         `${SUPABASE_URL}/rest/v1/artisans_public?id=eq.${devis.artisan_id}&select=*`,
-          { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
-        );
-        const artisan = (await resA.json())[0];
 
         if (devis.statut === 'accepté' || devis.statut === 'refusé') {
           document.getElementById('state-deja-sub').textContent =
@@ -398,7 +422,7 @@
         document.getElementById('el-total').textContent = fmt(totalTTC);
 
         const acomptePct = devis.acompte_pourcentage;
-        const isPremium = artisan?.plan === 'premium' && artisan?.stripe_connected;
+        const isPremium = !!artisan?.paiement_en_ligne;
 
         if (acomptePct && acomptePct > 0) {
           const montantAcompte = totalTTC * (acomptePct / 100);
